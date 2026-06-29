@@ -10,6 +10,7 @@ class HealCapability(ABC):
 
 class TransformCapability(ABC):
     def __init__(self):
+        super().__init__()
         self._transformed = 0
 
     @abstractmethod
@@ -25,98 +26,84 @@ class Sproutling(Creature, HealCapability):
     def __init__(self):
         super().__init__("Sproutling", "Grass")
 
+    def attack(self):
+        return ("Sproutling uses Vine Whip!")
+
     def heal(self, target: Creature) -> str:
-        return f"{self.name} healed {target.name}"
+        return "Sproutling heals itself for a small amount"
 
 
 class Bloomelle(Creature, HealCapability):
     def __init__(self):
         super().__init__("Bloomelle", "Grass/Fairy")
 
+    def attack(self):
+        return ("Bloomelle uses Petal Dance!")
+
+    def heal(self, target: Creature) -> str:
+        return "Bloomelle heals itself and others for a large amount"
+
 
 class Shiftling(Creature, TransformCapability):
     def __init__(self):
         super().__init__("Shiftling", "Normal")
+        # self._transformed = 0
+
+    def attack(self):
+        if (not self._transformed):
+            return ("Shiftling attacks normally.")
+        return ("Shiftling performs a boosted strike!")
 
     def transform(self):
         if (self._transformed):
-            return f"{self.name} has already transformed"
+            return "Shiftling has already shifted."
         else:
             self._transformed = 1
-            return f"{self.name} shifts into a sharper form!"
+            return "Shiftling shifts into a sharper form!"
 
     def revert(self):
         if (self._transformed):
             self._transformed = 0
-            return f"{self.name} has reverted"
+            return "Shiftling returns to normal."
         else:
-            return "some text"
+            return "Shiftling was already normal."
 
 
 class Morphagon(Creature, TransformCapability):
     def __init__(self):
         super().__init__("Morphagon", "Normal/Dragon")
 
+    def attack(self):
+        if (not self._transformed):
+            return ("Morphagon attacks normally.")
+        return ("Morphagon unleashes a devastating morph strike!")
+
     def transform(self):
         if (self._transformed):
-            return f"{self.name} has already transformed"
+            return "Morphagon has already morphed."
         else:
             self._transformed = 1
-            return f"{self.name} shifts into a sharper form!"
+            return "Morphagon morphs into a dragonic battle form!"
 
     def revert(self):
         if (self._transformed):
             self._transformed = 0
-            return f"{self.name} has reverted"
+            return "Morphagon stabilizes its form."
         else:
-            return "some text"
+            return "Morphagon is already stable."
 
 
 class TransformCreatureFactory(CreatureFactory):
-    def create_base():
+    def create_base(self):
         return (Shiftling())
 
-    def create_evolved():
+    def create_evolved(self):
         return (Morphagon())
 
 
 class HealingCreatureFactory(CreatureFactory):
-    def create_base():
+    def create_base(self):
         return (Sproutling())
 
-    def create_evolved():
+    def create_evolved(self):
         return (Bloomelle())
-
-
-def main():
-    hcfac = HealingCreatureFactory()
-    hc_base = hcfac.create_base()
-    hc_evolved = hcfac.create_evolved()
-    print("Testing Creature with healing capability")
-    print("\tbase:")
-    hc_base.describe()
-    hc_base.attack()
-    hc_base.heal()
-    print("\tevolved:")
-    hc_evolved.describe()
-    hc_evolved.attack()
-    hc_evolved.heal()
-    tcfac = TransformCreatureFactory()
-    tc_base = tcfac.create_base()
-    tc_evolved = tcfac.create_evolved()
-    print("\tbase:")
-    tc_base.describe()
-    tc_base.attack()
-    tc_base.transform()
-    tc_base.attack()
-    tc_base.revert()
-    print("\tevolved:")
-    tc_evolved.describe()
-    tc_evolved.attack()
-    tc_evolved.transform()
-    tc_evolved.attack()
-    tc_evolved.revert()
-
-
-if __name__ == "__main__":
-    main()
