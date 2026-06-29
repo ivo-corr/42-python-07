@@ -16,7 +16,7 @@ def fight(fac_one: CreatureFactory, fac_two: CreatureFactory):
     print(base_first.describe())
     print("\tvs.")
     print(base_second.describe())
-    print("fight!")
+    print("\tfight!")
     print(base_first.attack())
     print(base_second.attack())
 

@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class Creature(ABC):
+    def __init__(self, name: str, type: str):
+        self.name = name
+        self.type = type
+
     @abstractmethod
     def attack() -> str:
         ...
@@ -23,17 +27,18 @@ class CreatureFactory(ABC):
 
 class FlameFactory(CreatureFactory):
     def create_base(self) -> Creature:
-        return (Flameling())
+        return (Flameling("Flamey", "Flameling"))
 
     def create_evolved(self) -> Creature:
-        return (Pyrodon())
+        return (Pyrodon("Pyrite", "Pyrodon"))
+
 
 class AquaFactory(CreatureFactory):
     def create_base(self) -> Creature:
-        return (Aquabub())
+        return (Aquabub("Aqui", "Aquabub"))
 
     def create_evolved(self) -> Creature:
-        return (Torragon())
+        return (Torragon("Tor", "Torragon"))
 
 
 class Flameling(Creature):
