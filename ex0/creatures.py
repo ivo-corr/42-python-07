@@ -3,16 +3,15 @@ from abc import ABC, abstractmethod
 
 class Creature(ABC):
     def __init__(self, name: str, type: str):
-        self.name = name
-        self.type = type
+        self._name = name
+        self._type = type
 
     @abstractmethod
-    def attack() -> str:
+    def attack(self) -> str:
         ...
 
-    @abstractmethod
-    def describe() -> str:
-        ...
+    def describe(self) -> str:
+        return f"{self._name} is a {self._type} type Creature"
 
 
 class CreatureFactory(ABC):
@@ -27,47 +26,47 @@ class CreatureFactory(ABC):
 
 class FlameFactory(CreatureFactory):
     def create_base(self) -> Creature:
-        return (Flameling("Flamey", "Flameling"))
+        return (Flameling())
 
     def create_evolved(self) -> Creature:
-        return (Pyrodon("Pyrite", "Pyrodon"))
+        return (Pyrodon())
 
 
 class AquaFactory(CreatureFactory):
     def create_base(self) -> Creature:
-        return (Aquabub("Aqui", "Aquabub"))
+        return (Aquabub())
 
     def create_evolved(self) -> Creature:
-        return (Torragon("Tor", "Torragon"))
+        return (Torragon())
 
 
 class Flameling(Creature):
+    def __init__(self):
+        super().__init__("Flameling", "Fire")
+
     def attack(self) -> str:
         return "Flameling uses Ember!"
 
-    def describe(self) -> str:
-        return "Flameling is a Fire type Creature"
-
 
 class Pyrodon(Creature):
+    def __init__(self):
+        super().__init__("Pyrodon", "Fire/Flying")
+
     def attack(self) -> str:
         return "Pyrodon uses Flamethrower!"
 
-    def describe(self) -> str:
-        return "Pyrodon is a Fire type Creature"
-
 
 class Aquabub(Creature):
+    def __init__(self):
+        super().__init__("Aquabub", "Water")
+
     def attack(self) -> str:
         return "Aquabub uses Water Gun!"
 
-    def describe(self) -> str:
-        return "Aquabub is a Water type Creature"
-
 
 class Torragon(Creature):
+    def __init__(self):
+        super().__init__("Torragon", "Water")
+
     def attack(self) -> str:
         return "Torragon uses Hydro Pump!"
-
-    def describe(self) -> str:
-        return "Torragon is a Water type Creature"
