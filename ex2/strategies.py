@@ -18,10 +18,10 @@ class NormalStrategy(BattleStrategy):
         return (True)
 
     def act(self, c: Creature):
-        if (type(c) is not Creature):
-            raise Exception(f"Invalid input '{c}' "
+        if (not isinstance(c, Creature)):
+            raise Exception(f"Invalid input '{c._name}' "
                             "for this normal strategy")
-        c.attack()
+        print(c.attack())
 
 
 class AggressiveStrategy(BattleStrategy):
@@ -31,12 +31,12 @@ class AggressiveStrategy(BattleStrategy):
         return (False)
 
     def act(self, c: Creature | TransformCapability):
-        if (type(c) is not TransformCapability):
-            raise Exception(f"Invalid Creature '{c}' "
+        if (not isinstance(c, TransformCapability)):
+            raise Exception(f"Invalid Creature '{c._name}' "
                             "for this aggressive strategy")
-        c.transform()
-        c.attack()
-        c.revert()
+        print(c.transform())
+        print(c.attack())
+        print(c.revert())
 
 
 class DefensiveStrategy(BattleStrategy):
@@ -46,8 +46,8 @@ class DefensiveStrategy(BattleStrategy):
         return (False)
 
     def act(self, c: Creature | HealCapability):
-        if (type(c) is not HealCapability):
-            raise Exception(f"Invalid Creature '{c}' "
+        if (not isinstance(c, HealCapability)):
+            raise Exception(f"Invalid Creature '{c._name}' "
                             "for this defensive strategy")
-        c.attack()
-        c.heal()
+        print(c.attack())
+        print(c.heal(c))
