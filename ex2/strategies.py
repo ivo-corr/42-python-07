@@ -9,7 +9,7 @@ class BattleStrategy(ABC):
         ...
 
     @abstractmethod
-    def act(self) -> None:
+    def act(self, c: Creature) -> None:
         ...
 
 
@@ -17,7 +17,7 @@ class NormalStrategy(BattleStrategy):
     def is_valid(self, c: Creature) -> bool:
         return (True)
 
-    def act(self, c: Creature):
+    def act(self, c: Creature) -> None:
         if (not isinstance(c, Creature)):
             raise Exception(f"Invalid input '{c._name}' "
                             "for this normal strategy")
@@ -26,11 +26,11 @@ class NormalStrategy(BattleStrategy):
 
 class AggressiveStrategy(BattleStrategy):
     def is_valid(self, c: Creature) -> bool:
-        if (type(c) is Creature & TransformCapability):
+        if (isinstance(c, (Creature, TransformCapability))):
             return (True)
         return (False)
 
-    def act(self, c: Creature | TransformCapability):
+    def act(self, c: Creature) -> None:
         if (not isinstance(c, TransformCapability)):
             raise Exception(f"Invalid Creature '{c._name}' "
                             "for this aggressive strategy")
@@ -41,11 +41,11 @@ class AggressiveStrategy(BattleStrategy):
 
 class DefensiveStrategy(BattleStrategy):
     def is_valid(self, c: Creature) -> bool:
-        if (type(c) is HealCapability):
+        if (isinstance(c, HealCapability)):
             return (True)
         return (False)
 
-    def act(self, c: Creature | HealCapability):
+    def act(self, c: Creature) -> None:
         if (not isinstance(c, HealCapability)):
             raise Exception(f"Invalid Creature '{c._name}' "
                             "for this defensive strategy")

@@ -17,11 +17,11 @@ class Creature(ABC):
 
 class CreatureFactory(ABC):
     @abstractmethod
-    def create_base() -> Creature:
+    def create_base(self) -> Creature:
         ...
 
     @abstractmethod
-    def create_evolved() -> Creature:
+    def create_evolved(self) -> Creature:
         ...
 
 
@@ -42,7 +42,7 @@ class AquaFactory(CreatureFactory):
 
 
 class Flameling(Creature):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Flameling", "Fire")
 
     def attack(self) -> str:
@@ -50,7 +50,7 @@ class Flameling(Creature):
 
 
 class Pyrodon(Creature):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Pyrodon", "Fire/Flying")
 
     def attack(self) -> str:
@@ -58,7 +58,7 @@ class Pyrodon(Creature):
 
 
 class Aquabub(Creature):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Aquabub", "Water")
 
     def attack(self) -> str:
@@ -66,7 +66,7 @@ class Aquabub(Creature):
 
 
 class Torragon(Creature):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__("Torragon", "Water")
 
     def attack(self) -> str:
