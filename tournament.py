@@ -1,10 +1,12 @@
+from ex0.creatures import Creature
 from ex0 import AquaFactory, FlameFactory, CreatureFactory
 from ex1 import TransformCreatureFactory, HealingCreatureFactory
 from ex2 import BattleStrategy
 from ex2 import NormalStrategy, AggressiveStrategy, DefensiveStrategy
+import typing
 
 
-def battle(opponents: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
+def battle(opponents: list[tuple[Creature, BattleStrategy]]) -> None:
     print(f"{len(opponents)} opponents involved\n")
     for i in range(len(opponents)):
         for ii in range(0, len(opponents[(i + 1):])):
@@ -18,21 +20,30 @@ def battle(opponents: list[tuple[CreatureFactory, BattleStrategy]]) -> None:
             print() if len(opponents[(i + 1):]) > 1 else None
 
 
-def main():
-    tournaments = [
-        ["basic [ (Flameling+Normal), (Healing+Defensive) ]",
+def main() -> None:
+    tournaments: list[
+        tuple[str, list[tuple[Creature, BattleStrategy]]]] = [
+        ("basic [ (Flameling+Normal), (Healing+Defensive) ]",
          [(FlameFactory().create_base(), NormalStrategy()),
-          (HealingCreatureFactory().create_base(), DefensiveStrategy())]],
-        ["error [ (Flameling+Aggressive), (Healing+Defensive) ]",
+          (HealingCreatureFactory().create_base(), DefensiveStrategy())]),
+        ("error [ (Flameling+Aggressive), (Healing+Defensive) ]",
          [(FlameFactory().create_base(), AggressiveStrategy()),
-          (HealingCreatureFactory().create_base(), DefensiveStrategy())]],
-        ["multiple [ (Aquabub+Normal), (Healing+Defensive), "
+          (HealingCreatureFactory().create_base(), DefensiveStrategy())]),
+        ("multiple [ (Aquabub+Normal), (Healing+Defensive), "
          "(Transform+Aggressive) ]",
          [(AquaFactory().create_base(), NormalStrategy()),
           (HealingCreatureFactory().create_base(), DefensiveStrategy()),
-          (TransformCreatureFactory().create_base(), AggressiveStrategy())]],
+          (TransformCreatureFactory().create_base(), AggressiveStrategy())]),
+        # ("custom -",
+        #  [(AquaFactory().create_base(), NormalStrategy()),
+        #   (HealingCreatureFactory().create_base(), DefensiveStrategy()),
+        #   (TransformCreatureFactory().create_base(), AggressiveStrategy()),
+        #   (TransformCreatureFactory().create_base(), NormalStrategy()),
+        #   (FlameFactory().create_base(), NormalStrategy())])
           ]
     for t in tournaments:
+        title: str
+        config: str
         title, config = t[0].split(' ', 1)
         print(f"Tournament {tournaments.index(t)} ({title})")
         print(f" {config}")
