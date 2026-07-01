@@ -1,6 +1,5 @@
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
 from ex1.creatures import HealCapability, TransformCapability
-from ex0.creatures import Creature
 import typing
 
 
